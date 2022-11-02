@@ -7,58 +7,44 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return Item::paginate();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        // validate the form data
+        $request->validate([
+            'title' => ['required']
+        ]);
+
+        $item = new Item;
+        $item->title = $request->input('title');
+        $item->save();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
     public function show(Item $item)
     {
-        //
+        return $item;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Item $item)
     {
-        //
+        $request->validate([
+            'title' => ['required']
+        ]);
+
+        $item->title = $request->input('title');
+        $item->save();
+
+        return $item;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+        return response()->noContent();
     }
 }
