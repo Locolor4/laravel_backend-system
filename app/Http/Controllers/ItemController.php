@@ -10,12 +10,11 @@ class ItemController extends Controller
 
     public function index()
     {
-        return Item::paginate();
+        return Item::all();
     }
 
     public function store(Request $request)
     {
-        // validate the form data
         $request->validate([
             'title' => ['required']
         ]);
@@ -23,6 +22,8 @@ class ItemController extends Controller
         $item = new Item;
         $item->title = $request->input('title');
         $item->save();
+
+        return $item;
     }
 
     public function show(Item $item)
